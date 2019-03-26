@@ -1,16 +1,20 @@
+export PATH="/home/harshil/Apps:/home/harshil/Projects/node.js/node-v8.9.4-linux-x64/bin:$PATH:/usr/local/go/bin"
+export PYTHONPATH="$PYTHONPATH:/home/harshil/Projects/python/django-webwhatsapi/WebWhatsAPI/"
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/mnt/harshil/harshil/.oh-my-zsh
+  export ZSH=/home/harshil/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
+skip_global_compinit=1
+
 # Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
@@ -56,6 +60,8 @@ plugins=(git node npm extract z)
 
 source $ZSH/oh-my-zsh.sh
 
+alias pythoncv2="export WORKON_HOME=$HOME/.virtualenvs; source /usr/local/bin/virtualenvwrapper.sh"
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -88,7 +94,7 @@ source $ZSH/oh-my-zsh.sh
 #
 
 #DISABLE_AUTO_TITLE="true"
-sh ~/.config/gotham/gotham.sh
+#sh ~/.config/gotham/gotham.sh
 source ~/.ohmyzshrc
 
 if [ -f ~/.bash_aliases ]; then
@@ -98,4 +104,3 @@ fi
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-

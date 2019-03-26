@@ -154,5 +154,5 @@ preexec() {
 }
 trap 'preexec' DEBUG
 alias tmux='tmux -u'
-sh ~/.config/gotham/gotham.sh
+sh ~/.config/gotham/gotham1.sh
 zsh

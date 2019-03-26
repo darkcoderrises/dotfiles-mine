@@ -1,7 +1,5 @@
 let mapleader=" "
 
-
-set viminfo='10,\"100,:20,%,n~/.viminfo
 set nu
 set expandtab
 set sw=4
@@ -11,7 +9,7 @@ set scrolloff=9999
 set mouse=a
 
 syntax enable
-set background=dark
+"set background=dark
 
 set wildmenu
 set wildmode=list:longest,full
@@ -28,10 +26,12 @@ nore ; :
 
 call plug#begin('~/.vim/plugged')
 " vim-plug
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'whatyouhide/vim-gotham'
 Plug 'tpope/vim-sensible'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 call plug#end()
+
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -40,6 +40,7 @@ let g:syntastic_cpp_compiler_options = '-std=c++11'
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
+let g:syntastic_enable_racket_racket_checker = 1
 
 let g:ycm_path_to_python_interpreter='/usr/bin/python'
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -61,12 +62,27 @@ Plugin 'rodnaph/vim-color-schemes'
 Plugin 'pangloss/vim-javascript'
 Plugin 'thaerkh/vim-workspace'
 Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'hdima/python-syntax'
+Plugin 'junegunn/goyo.vim'
+
+Plugin 'MicahElliott/vrod'
+Plugin 'guns/vim-sexp'
+Plugin 'tpope/vim-sexp-mappings-for-regular-people'
+Plugin 'wlangstroth/vim-racket'
+Plugin 'kovisoft/slimv'
+
+Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'mbbill/undotree'
+
+Plugin 'cocopon/iceberg.vim'
 call vundle#end()
+
+let g:slimv_swank_cmd = '! tmux new-window -d -n REPL-SBCL "sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp"'
 
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
-source ~/.vim/bundle/vim-color-schemes/colors/automation.vim
+"source ~/.vim/bundle/vim-color-schemes/colors/automation.vim
 let g:airline_theme='badwolf'
 let g:airline#extensions#tabline#enabled = 1
 set laststatus=1
@@ -94,9 +110,7 @@ endif
 
 "Always show current position
 set ruler
-
 set lazyredraw 
-
 set magic
 
 
@@ -163,16 +177,41 @@ func! SyntasticCheckCoffeescript()
 endfunc
 nnoremap <silent> <leader>c :call SyntasticCheckCoffeescript()<cr>
 
+let g:syntastic_quiet_messages = {
+        \ "!level":  "errors",
+        \ "regex":   '.*',
+        \ "file:p":  '.*' }
+
 " vim-workspace
 let g:workspace_autosave_ignore = ['gitcommit']
 let g:workspace_autosave_untrailspaces = 0
-
-let g:workspace_persist_undo_history = 1  " enabled = 1 (default), disabled = 0
 nnoremap <leader>s :ToggleWorkspace<CR>
+
+"UNDO THIGNS"
+let g:workspace_persist_undo_history = 1  " enabled = 1 (default), disabled = 0
 let g:workspace_undodir='.undodir'
+nnoremap <c-u> :UndotreeToggle<cr>
+
+if has("persistent_undo")
+    set undodir=~/.undodir/
+    set undofile
+endif
+
 
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 
-
-" highlight CursorLine ctermbg=LightBlue
+highlight CursorLine ctermbg=LightBlue
 set scrolloff=10
+set background=dark
+" colorscheme solarized
+
+colorscheme dracula
+set cursorline
+highlight LineNr ctermbg=233
+
+
+
+if !has('nvim')
+    set viminfo='10,\"100,:20,%,n~/.viminfo
+  set viminfo+=n~/.vim/viminfo
+endif
