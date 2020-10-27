@@ -37,7 +37,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm|xterm-color|*-256color) color_prompt=yes;;
+    xterm-color|*-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -57,20 +57,16 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    if [[ ${EUID} == 0 ]] ; then
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\h\[\033[01;34m\] \W \$\[\033[00m\] '
-    else
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w \$\[\033[00m\] '
-    fi
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h \w \$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h \w\a\]$PS1"
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
     ;;
 *)
     ;;
@@ -120,39 +116,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-if [ -x /usr/bin/mint-fortune ]; then
-     /usr/bin/mint-fortune
-fi
-
-PS1="\[\e]0;\u@\h \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\h\[\033[00m\] \[\033[01;31m\][\T]\[\033[00m\] \[\033[01;34m\]\w \$\[\033[00m\] "
-export ANDROID_HOME=~/Android/Sdk
-export PATH=${PATH}:${ANDROID_HOME}/tools
-export PATH=${PATH}:${ANDROID_HOME}/platform-tools
-export PATH=${PATH}:/mnt/harshil/harshil/Apps/jdk1.8.0_121/bin:/mnt/harshil/harshil/Apps/node-v6.9.4-linux-x64/bin
-
-alias assh='autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3"'
-
-function update-x11-forwarding
-{
-    if [ -z "$STY" -a -z "$TMUX" ]; then
-        echo $DISPLAY > ~/.display.txt
-    else
-        export DISPLAY=`cat ~/.display.txt`
-    fi
-}
-
-# This is run before every command.
-preexec() {
-    # Don't cause a preexec for PROMPT_COMMAND.
-    # Beware!  This fails if PROMPT_COMMAND is a string containing more than one command.
-    [ "$BASH_COMMAND" = "$PROMPT_COMMAND" ] && return 
-
-    update-x11-forwarding
-
-                        # Debugging.
-                        #echo DISPLAY = $DISPLAY, display.txt = `cat ~/.display.txt`, STY = $STY, TMUX = $TMUX  
-}
-trap 'preexec' DEBUG
-alias tmux='tmux -u'
-sh ~/.config/gotham/gotham1.sh
-zsh
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

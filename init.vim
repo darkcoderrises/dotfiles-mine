@@ -30,11 +30,9 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_enable_racket_racket_checker = 1
 
 
-let g:ycm_global_ycm_extra_conf = '~/platform/.ycm_extra_conf.py'
-
 let g:ycm_path_to_python_interpreter='/usr/bin/python2'
 let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_show_diagnostics_ui = 0
+let g:ycm_show_diagnostics_ui = 1
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -53,6 +51,8 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'hdima/python-syntax'
 Plugin 'valloric/youcompleteme'
 Plugin 'junegunn/goyo.vim'
+Plugin 'jparise/vim-graphql'
+Plugin 'kshenoy/vim-signature'
 
 Plugin 'MicahElliott/vrod'
 Plugin 'guns/vim-sexp'
@@ -73,6 +73,13 @@ Plugin 'xolox/vim-easytags'
 Plugin 'vim-misc'
 
 Plugin 'rking/ag.vim'
+Plugin 'christoomey/vim-tmux-navigator'
+
+
+Plugin 'morhetz/gruvbox'
+Plugin 'jacoborus/tender.vim'
+Plugin 'rainglow/vim'
+
 call vundle#end()
 
 let g:ag_working_path_mode="r"
@@ -235,8 +242,14 @@ let g:go_highlight_function_parameters = 1
 let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
 
 
+let g:go_autodetect_gopath = 1
+let g:go_list_type = "quickfix"
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
 let g:go_disable_autoinstall = 0
@@ -270,3 +283,40 @@ nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 
 noremap <Leader>Y "+y
 noremap <Leader>P "+p
+
+let g:go_fmt_fail_silently = 1
+
+let g:go_fmt_command = "goimports"   
+let g:go_auto_type_info = 1         
+
+let g:gitgutter_max_signs = 2000
+let g:airline_theme='angr'
+colorscheme gruvbox
+
+highlight VertSplit cterm=None ctermbg=0
+set fillchars+=vert:\ 
+
+set colorcolumn=100
+au FileType go nmap <Leader>b <Plug>(go-build)
+
+autocmd BufWritePre *.go,*.graphql :%s/\s\+$//ge
+
+let g:airline#extensions#tabline#formatter = "unique_tail"
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
+
+hi DiffAdd      ctermfg=NONE          ctermbg=Cyan
+hi DiffChange   ctermfg=NONE          ctermbg=NONE
+hi DiffDelete   ctermfg=LightBlue     ctermbg=Red
+hi DiffText     ctermfg=Yellow        ctermbg=Red
